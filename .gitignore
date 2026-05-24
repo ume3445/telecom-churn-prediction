@@ -1,1 +1,11 @@
 .venv/
+.DS_Store
+__pycache__/
+.mplconfig/
+outputs/
+Misc/
+telecom_churn_report.html
+telecom_churn_report.md
+telecom_churn_report.pdf
+format_final_docx.py
+generate_final_report_docx.py
