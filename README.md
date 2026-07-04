@@ -20,6 +20,10 @@ Real results on the held-out test set, taken from `outputs/model_comparison_resu
 - Class-balanced baseline: test ROC AUC 0.8366
 - Calibrating the Elastic Net model with isotonic regression lowered its Brier score from 0.1641 to 0.1361, so the predicted probabilities became more reliable.
 
+![ROC curves for the four logistic models on the test set](outputs/roc_curves.png)
+
+*ROC curves for the four logistic models on the test set, all sitting well above the random-guess diagonal.*
+
 ## What's real
 
 These three modules run genuine analyses on the actual dataset. The numbers below come from the restored `outputs/` folder.
@@ -28,9 +32,17 @@ These three modules run genuine analyses on the actual dataset. The numbers belo
 
 This fits the calibrated Elastic Net model and runs a SHAP `LinearExplainer` on the real test data to explain both the model as a whole and individual customers. It writes a beeswarm summary, three waterfall plots for the highest-risk customers, three dependence plots, and a table of the most important features. The strongest drivers by mean absolute SHAP value were tenure (0.916), having dependents (0.533), a two-year contract (0.395), fiber optic internet (0.282), and a one-year contract (0.256). These match the coefficient signs from the logistic model, which was a useful sanity check.
 
+![SHAP beeswarm summary of the top 15 features](outputs/shap/shap_summary_beeswarm_top15.png)
+
+*SHAP beeswarm summary of the top 15 features, showing how each feature pushes an individual customer's prediction toward or away from churn.*
+
 ### Module 3: Survival analysis (`module3_survival_analysis.py`)
 
 This reframes churn as a time-to-event problem, using customer tenure in months as the duration and churn as the event. It fits Kaplan-Meier curves overall and split by contract type, a Cox proportional hazards model for hazard ratios, and a Weibull AFT model for predicted survival time. On the test set the Cox model reached a concordance index of 0.9028. One honest caveat: that value is probably optimistic, because tenure is the duration and some predictors such as total charges are correlated with tenure, so there is overlap between the duration and the features. For the five highest-risk customers, predicted median survival ranged from about 3.24 to 11.05 months.
+
+![Kaplan-Meier survival curves by contract type](outputs/survival/km_by_contract.png)
+
+*Kaplan-Meier survival curves by contract type, showing month-to-month customers churning earliest and longer contracts retaining customers longer.*
 
 ### Module 4: Revenue at risk and ROI simulation (`module4_revenue_roi.py`)
 
