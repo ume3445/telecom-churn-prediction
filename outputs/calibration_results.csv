@@ -1,0 +1,4 @@
+Model,Variant,Brier_Score
+Elastic Net Logistic,calibrated,0.13613643127483044
+Ridge Logistic (L2),raw,0.16370240330913757
+Elastic Net Logistic,raw,0.16414952317220152

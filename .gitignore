@@ -2,7 +2,6 @@
 .DS_Store
 __pycache__/
 .mplconfig/
-outputs/
 Misc/
 telecom_churn_report.html
 telecom_churn_report.md
