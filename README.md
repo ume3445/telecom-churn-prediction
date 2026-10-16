@@ -4,6 +4,19 @@ I built this project to predict which telecom customers are likely to cancel the
 
 This was a group project for CSC 398 Independent Study, built together with Moeez Islam Malik and Muhammad Abdullah Saleem.
 
+![Four result figures: ROC curves for the baseline models, SHAP feature importance, Kaplan-Meier survival by contract type, and net ROI by decision threshold](docs/overview.jpg)
+
+**At a glance**
+
+| | Result |
+|---|---|
+| Best baseline (Elastic Net logistic) | Test ROC AUC 0.8484, PR AUC 0.6452 |
+| Probability calibration (isotonic) | Brier score 0.1641 to 0.1361 |
+| Top churn drivers (SHAP) | Tenure, having dependents, two-year contract, fiber optic internet |
+| Survival model (Cox) | Concordance 0.9028, probably optimistic (see Module 3) |
+| Revenue at risk, churn probability of 0.4 or higher | $242,525.92 per year |
+| Uplift modeling | Method demo on simulated treatment data, not a real result |
+
 ## Dataset
 
 The data is the Telco Customer Churn dataset (`Telco_customer_churn-2.xlsx`), which has about 7,043 customers and 33 columns covering demographics, the services each customer subscribes to, billing and contract details, and whether the customer churned. The prediction target is the binary `Churn_Value` field. I use a stratified 80/20 train and test split with 5-fold cross-validation, and I drop identifier and post-outcome columns such as `Churn_Reason` and `Churn_Score` so they cannot leak into the features.
